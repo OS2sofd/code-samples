@@ -1,0 +1,12 @@
+{
+  "Logging":
+  {
+    "LogFile": "./logs/sample1_orgunit_kle_to_csv.log",
+    "MaxLogLines": "10000"
+  },
+  "Sofd": 
+  {
+	"BaseUrl": "https://demo.sofd.io/odata",
+	"ApiKey": ""
+  }
+}
