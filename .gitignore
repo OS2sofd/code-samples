@@ -114,6 +114,6 @@ local.properties
 /ui/config/application.development.properties
 
 #powershell
-/code_samples/powershell/*.ps1.settings.development.json
-/code_samples/powershell/logs/*.log
-/code_samples/powershell/*.csv
+/powershell/*.ps1.settings.development.json
+/powershell/logs/*.log
+/powershell/*.csv
