@@ -19,6 +19,7 @@ Formålet med repositoryet er at:
 
 ## Struktur (planlagt)
 
+```text
 /
 ├── powershell/                                     # PowerShell-eksempler
 │   └── /shared_modules/                            # Delte Powershell moduler
@@ -27,6 +28,7 @@ Formålet med repositoryet er at:
 ├── python/                                         # Python-eksempler
 ├── LICENSE                                         # Mozilla Public License 2.0
 └── README.md                                       # Dette dokument
+```
 
 ## Brug
 Når eksemplerne er tilgængelige, vil hver undermappe indeholde sin egen README med:
