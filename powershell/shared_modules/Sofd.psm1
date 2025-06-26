@@ -2,17 +2,34 @@ param(
     [parameter(Position=0,Mandatory=$true)][PSCustomObject]$SofdSettings
 )
 
-# gets all OrgUnits with primary, secondary and tertiary KLEs
-Function Get-SofdOrgUnitKLEs
+#fetches OrgUnits from Sofd with optional parameters to add futher OdataParameters and enrich the OrgUnit with FullPath
+Function Get-SofdOrgUnits
 {
-	# fetch OrgUnit with primary, secondary and tertiary KLEs
-	$OrgUnitKleQuery = $SofdSettings.BaseUrl + "/OrgUnits?`$expand=KLEPrimary,KLESecondary,KLETertiary"
-    $OrgUnitKleResponse = Invoke-RestMethod $OrgUnitKleQuery -Headers @{ApiKey=$SofdSettings.ApiKey}
-    
-    # takes orgUnit response and enriches each orgUnit with the FullPath parameter
-    $OrgUnitWithKLEs = Invoke-EnrichOrgUnitWithFullPath -OrgUnits $OrgUnitKleResponse.value
+	Param($OdataParameters = "", $EnrichWithFullPath = $false)
 	
-	return $OrgUnitWithKLEs
+	# fetches OrgUnits from Sofd (with possibility to add futher parameters)
+	$OrgUnitQuery = $SofdSettings.BaseUrl + "/OrgUnits" + $OdataParameters
+    $OrgUnitResponse = Invoke-RestMethod $OrgUnitQuery -Headers @{ApiKey=$SofdSettings.ApiKey}
+	
+	#if optional parameter set to true, it will enrich the orgUnit a FullPath string (format: Grandparent/Parent/OrgUnit)
+	if($EnrichWithFullPath)
+	{
+		$OrgUnits = Invoke-EnrichOrgUnitWithFullPath -OrgUnits $OrgUnitResponse.value
+		return $OrgUnits 
+	}
+	
+	return $OrgUnitResponse.value
+}
+
+#fetches Persons from Sofd with optional parameters to add futher OdataParameters
+Function Get-SofdPersons
+{
+	Param($OdataParameters = "")
+	
+	# fetches Persons from Sofd (with possibility to add futher parameters)
+	$PersonQuery = $SofdSettings.BaseUrl + "/Persons" + $OdataParameters
+    $PersonResponse = Invoke-RestMethod $PersonQuery -Headers @{ApiKey=$SofdSettings.ApiKey}
+	return $PersonResponse.value
 }
 
 # this function insert to FullPath into a list of OrgUnits without futher rest calls
@@ -63,27 +80,6 @@ Function Read-ParentPath
 		
 	}
 	return $ParentalPath
-}
-
-# get all OrgUnits with contact information
-Function Get-SofdOrgUnitWithContactInformation
-{
-	# fetch OrgUnits with contanct information
-	$OrgUnitContactQuery = $SofdSettings.BaseUrl + "/OrgUnits?`$expand=phones,addresses"
-    $OrgUnitContactResponse = Invoke-RestMethod $OrgUnitContactQuery -Headers @{ApiKey=$SofdSettings.ApiKey}
-
-    # enriches the OrgUnits with the full Path
-    $OrgUnitContactInformation = Invoke-EnrichOrgUnitWithFullPath -OrgUnits $OrgUnitContactResponse.value
-    
-    return $OrgUnitContactInformation
-}
-
-# get all people with a primary affiliation and primary ad user
-Function Get-SofdPersonWithPrimaryAffiliationAndAd
-{
-	$PersonWithPrimeAffiliationAndAdQuery = $SofdSettings.BaseUrl + "/Persons?`$expand=affiliations,users&`$filter=(affiliations/any(a: a/Prime eq true)) and (users/any(u: (u/UserType eq 'ACTIVE_DIRECTORY') and (u/Prime eq true)))"
-    $PersonWithPrimeAffiliationAndAdResponse = Invoke-RestMethod $PersonWithPrimeAffiliationAndAdQuery -Headers @{ApiKey=$SofdSettings.ApiKey}
-    return $PersonWithPrimeAffiliationAndAdResponse.value
 }
 
 Export-ModuleMember -function Get-*

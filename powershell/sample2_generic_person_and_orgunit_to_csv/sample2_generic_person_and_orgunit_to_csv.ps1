@@ -20,8 +20,12 @@ $ScriptTimer = Measure-Command {
     Try
     {
 		LogInfo("Fetching data from SOFD")
-		$OrgUnitWithContactInfo = Get-SofdOrgUnitWithContactInformation
-		$PersonWithPrimaryAffiliationAndAd = Get-SofdPersonWithPrimaryAffiliationAndAd
+		#fetches all OrgUnits with their contact information
+		$OrgUnitWithContactInfo = Get-SofdOrgUnits -OdataParameters "?`$expand=phones,addresses" -EnrichWithFullPath $true
+		# fetches all people that a primary affiliation and primary ad user
+		$PersonWithPrimaryAffiliationAndAd = Get-SofdPersons -OdataParameters "?`$expand=affiliations,users&`$filter=(affiliations/any(a: a/Prime eq true)) and (users/any(u: (u/UserType eq 'ACTIVE_DIRECTORY') and (u/Prime eq true)))"
+		# these two calls at different, that the OrgUnits fetches all whether they have the infomation or not (which is why it's also sanitized for secondary phones and addresses later)
+		# while persons only persons with a primary affiliation and ad user
 		
 		# arrays for OrgUnits and Persons csvs respectively 
 		$OrgUnitCsvData = @()

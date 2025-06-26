@@ -20,7 +20,7 @@ $ScriptTimer = Measure-Command {
     Try
     {
         LogInfo("Fetching data from SOFD")
-	    $OrgUnitWithKLEs = Get-SofdOrgUnitKLEs
+	    $OrgUnitWithKLEs = Get-SofdOrgUnits -OdataParameters "?`$expand=KLEPrimary,KLESecondary,KLETertiary" -EnrichWithFullPath $true
 	    $CsvData = @()
 	    Foreach($OrgUnit in $OrgUnitWithKLEs)
 	    {
