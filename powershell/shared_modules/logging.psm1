@@ -12,21 +12,21 @@ function LogInfo {
     param(
         [string] $Message
     )
-    (get-date -format "yyyy-MM-dd HH:mm:ss ") + "INFO $Message" >> $LogFile
+    (get-date -format "yyyy-MM-dd HH:mm:ss ") + "INFO $Message" >> "$($ScriptPath.Directory.FullName)/$($LogFile)"
 }
 
 function LogError {
     param(
         [string] $Message
     )
-    (get-date -format "yyyy-MM-dd HH:mm:ss ") + "ERROR $Message" >> $LogFile
+    (get-date -format "yyyy-MM-dd HH:mm:ss ") + "ERROR $Message" >> "$($ScriptPath.Directory.FullName)/$($LogFile)"
 }
 
 function LogWarning {
     param(
         [string] $Message
     )
-    (get-date -format "yyyy-MM-dd HH:mm:ss ") + "WARNING $Message" >> $LogFile
+    (get-date -format "yyyy-MM-dd HH:mm:ss ") + "WARNING $Message" >> "$($ScriptPath.Directory.FullName)/$($LogFile)"
 }
 
 function LogException {
@@ -39,5 +39,5 @@ function LogException {
 
 function ShrinkLog {
     $Tail = Get-content -Tail $MaxLogLines -Path "$($ScriptPath.Directory.FullName)/$($LogFile)"
-    $Tail > $LogFile 
+    $Tail > "$($ScriptPath.Directory.FullName)/$($LogFile)" 
 }
