@@ -21,6 +21,8 @@ $ScriptTimer = Measure-Command {
     {
         LogInfo("Fetching data from SOFD")
 	    $OrgUnitWithKLEs = Get-SofdOrgUnits -OdataParameters "?`$expand=KLEPrimary,KLESecondary,KLETertiary" -EnrichWithFullPath $true
+	    #the one below fetches all OrgUnits, but only the active KLEs. If that one is used the one above should be outcommented or deleted (see read me for futher notes)
+	    #$OrgUnitWithKLEs = Get-SofdOrgUnits -OdataParameters "?`$expand=KLEPrimary(`$filter=Active eq true),KLESecondary(`$filter=Active eq true),KLETertiary(`$filter=Active eq true)" -EnrichWithFullPath $true
 	    $CsvData = @()
 	    Foreach($OrgUnit in $OrgUnitWithKLEs)
 	    {
