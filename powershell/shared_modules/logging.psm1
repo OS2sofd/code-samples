@@ -4,8 +4,8 @@ param(
 )
 
 # Initialize
-If( -not (Test-Path -Path $LogFile -PathType Leaf) ){
-    New-Item -Path $LogFile -Force
+If( -not (Test-Path -Path "$($ScriptPath.Directory.FullName)/$($LogFile)" -PathType Leaf) ){
+    New-Item -Path "$($ScriptPath.Directory.FullName)/$($LogFile)" -Force
 }
 
 function LogInfo {
@@ -38,6 +38,6 @@ function LogException {
 }
 
 function ShrinkLog {
-    $Tail = Get-content -Tail $MaxLogLines -Path $LogFile
+    $Tail = Get-content -Tail $MaxLogLines -Path "$($ScriptPath.Directory.FullName)/$($LogFile)"
     $Tail > $LogFile 
 }

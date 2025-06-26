@@ -10,8 +10,8 @@ if( Test-Path "$($ScriptPath).settings.development.json" )
 #endregion
 
 #region Imports
-Import-Module -Name "$($ScriptPath.Directory.FullName)/shared_modules/logging.psm1" -ArgumentList ($Settings.Logging.LogFile, $Settings.Logging.MaxLogLines) -Force
-Import-Module -Name "$($ScriptPath.Directory.FullName)/shared_modules/Sofd.psm1" -ArgumentList ($Settings.Sofd) -Force -DisableNameChecking
+Import-Module -Name "$($ScriptPath.Directory.FullName)/../shared_modules/logging.psm1" -ArgumentList ($Settings.Logging.LogFile, $Settings.Logging.MaxLogLines) -Force
+Import-Module -Name "$($ScriptPath.Directory.FullName)/../shared_modules/Sofd.psm1" -ArgumentList ($Settings.Sofd) -Force -DisableNameChecking
 #endregion
 
 #region Main
@@ -90,8 +90,8 @@ $ScriptTimer = Measure-Command {
 		}
 		
 		# exports arrays to separate csv files
-		$OrgUnitCsvPath = "$($ScriptPath.Directory.FullName)\Generic_OrgUnits_Export.csv"
-		$PersonCsvPath = "$($ScriptPath.Directory.FullName)\Generic_Persons_Export.csv"
+		$OrgUnitCsvPath = "$($ScriptPath.Directory.FullName)/$($Settings.Output.OutputFolder)/$($Settings.Output.OutputOrgUnitFileName).csv"
+		$PersonCsvPath = "$($ScriptPath.Directory.FullName)/$($Settings.Output.OutputFolder)/$($Settings.Output.OutputPersonFileName).csv"
 		$OrgUnitCsvData | Export-Csv -Path $OrgUnitCsvPath -Encoding UTF8 -Delimiter ";" -NoTypeInformation
 		$PersonCsvData | Export-Csv -Path $PersonCsvPath -Encoding UTF8 -Delimiter ";" -NoTypeInformation
         

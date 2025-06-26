@@ -10,8 +10,8 @@ if( Test-Path "$($ScriptPath).settings.development.json" )
 #endregion
 
 #region Imports
-Import-Module -Name "$($ScriptPath.Directory.FullName)/shared_modules/logging.psm1" -ArgumentList ($Settings.Logging.LogFile, $Settings.Logging.MaxLogLines) -Force
-Import-Module -Name "$($ScriptPath.Directory.FullName)/shared_modules/Sofd.psm1" -ArgumentList ($Settings.Sofd) -Force -DisableNameChecking
+Import-Module -Name "$($ScriptPath.Directory.FullName)/../shared_modules/logging.psm1" -ArgumentList ($Settings.Logging.LogFile, $Settings.Logging.MaxLogLines) -Force
+Import-Module -Name "$($ScriptPath.Directory.FullName)/../shared_modules/Sofd.psm1" -ArgumentList ($Settings.Sofd) -Force -DisableNameChecking
 #endregion
 
 #region Main
@@ -65,7 +65,7 @@ $ScriptTimer = Measure-Command {
         	$CsvData += $CsvRow
        		
 		}
-		$CsvPath = "$($ScriptPath.Directory.FullName)\OrgUnits_KLE_Export.csv"
+		$CsvPath = "$($ScriptPath.Directory.FullName)/$($Settings.Output.OutputFolder)/$($Settings.Output.OutputFileName).csv"
         $CsvData | Export-Csv -Path $CsvPath -Encoding UTF8 -Delimiter ";" -NoTypeInformation
         
         LogInfo("CSV file created: $CsvPath with $($CsvData.Count) records")
