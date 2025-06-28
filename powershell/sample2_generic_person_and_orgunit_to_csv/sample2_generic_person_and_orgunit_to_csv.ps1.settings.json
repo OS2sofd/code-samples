@@ -1,0 +1,18 @@
+{
+  "Logging":
+  {
+    "LogFile": "../logs/sample2_generic_person_and_orgunit_to_csv.log",
+    "MaxLogLines": "10000"
+  },
+  "Sofd": 
+  {
+	"BaseUrl": "https://demo.sofd.io/odata",
+	"ApiKey": ""
+  },
+  "Output":
+  {
+  	"OutputFolder": "../output",
+  	"OutputPersonFileName": "Generic_Persons_Export",
+  	"OutputOrgUnitFileName": "Generic_OrgUnits_Export"
+  }
+}

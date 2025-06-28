@@ -1,0 +1,6 @@
+#powershell development setting files
+/powershell/*/*.ps1.settings.development.json
+
+#log and output files
+/powershell/logs/*.log
+/powershell/output/*
