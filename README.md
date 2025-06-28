@@ -4,10 +4,7 @@ Dette repository indeholder kodeeksempler, der demonstrerer brugen af [OS2sofd A
 
 ## Status
 
-⚠️ **Eksempler er under udvikling.**  
-Der er endnu ingen færdige eksempler i dette repository, men der arbejdes løbende på at tilføje dem.  
-
-Første eksempler laves i **PowerShell**. Support for andre sprog som Python, C#, mv. kan tilføjes senere.
+Første eksempler er lavet i **PowerShell**. Support for andre sprog som Python, C#, mv. kan tilføjes senere.
 
 ## Formål
 
